@@ -5,8 +5,12 @@ from langchain.vectorstores import MongoDBAtlasVectorSearch
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import TextLoader
+from langchainget.query import query,get_conversational_chain
 import os
 from db.db import connect_to_mongo
+
+class QueryRequest(BaseModel):
+    prompt: str
 
 app = FastAPI()
 collection = connect_to_mongo()
@@ -19,7 +23,7 @@ class content(BaseModel):
     text: str
 
 @app.post("/storevector")
-def storevector(text: content):
+async def storevector(text: content):
     with open("db\Coding Ninjas.txt", "a") as file:
         file.write(text.text)
     file.close()
@@ -42,8 +46,15 @@ def storevector(text: content):
     return "Embeddings saved to MongoDB vector base"
 
 @app.post("/queryresult")
-def queryResult():
-    pass
+async def queryResult(request: QueryRequest):
+    getdocs = query(collection,request.prompt)
+    chain = get_conversational_chain()
+    response = chain(
+        {"input_documents":getdocs,"question": request.prompt},
+        return_only_outputs=True
+        )
+    
+    return {"result":response}
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
