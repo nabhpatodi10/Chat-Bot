@@ -24,13 +24,13 @@ class content(BaseModel):
 
 @app.post("/storevector")
 async def storevector(text: content):
-    with open("db\Coding Ninjas.txt", "a") as file:
+    with open("db\Content.txt", "a") as file:
         file.write(text.text)
     file.close()
-    file = open("db\Coding Ninjas.txt")
+    file = open("db\Content.txt")
     cont = file.read()
 
-    loader = TextLoader("db\Coding Ninjas.txt")
+    loader = TextLoader("db\Content.txt")
     docs = loader.load()
     text_spiliter = RecursiveCharacterTextSplitter(chunk_size=600, chunk_overlap=20)
     splits = text_spiliter.split_documents(docs)
