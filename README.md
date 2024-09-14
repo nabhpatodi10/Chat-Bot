@@ -2,12 +2,13 @@
 
 ## Overview
 
-This repository contains a chatbot project built in Python using LangChain, Mongo DB and the Google Gemini API. The project employs vector embeddings for processing and storing information in a MongoDB database. Additionally, it includes a FastAPI implementation for interacting with the chatbot.
+This repository contains a chatbot project built in Python using LangChain, Mongo DB, Google Gemini API and Groq API. The project employs vector embeddings for processing and storing information in a MongoDB database. Additionally, it includes a FastAPI implementation for interacting with the chatbot.
 
 ## Features
 
 - **LangChain Integration**: Utilizes LangChain for connecting to LLMs.
 - **Google Gemini API**: Integrates with the Google Gemini API for enhanced language capabilities.
+-  **Groq API**: Integrates with the Groq for utilising Llama 3.1 70b LLM for enhanced language capabilities.
 - **Vector Embeddings**: Stores vector embeddings in a MongoDB database for efficient querying.
 - **FastAPI**: Provides a FastAPI interface for easy interaction with the chatbot.
 
@@ -22,6 +23,14 @@ Ensure you have the following installed:
 - Python 3.9 or higher
 - MongoDB
 - Google Gemini API access
+- Groq API access
+- FastAPI
+- LangChain
+
+You can do this by running the following command:
+```bash
+pip install -r requirements.txt
+```
 
 ### Clone the Repository
 
