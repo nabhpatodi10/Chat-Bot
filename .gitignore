@@ -1,0 +1,5 @@
+__pycache__
+db/__pycache__
+langchainget/__pycache__
+.env
+db/Content.txt

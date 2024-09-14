@@ -1,3 +1,6 @@
+import os
+from dotenv import load_dotenv
+load_dotenv()
 from fastapi import FastAPI
 import uvicorn
 from pydantic import BaseModel
@@ -6,7 +9,6 @@ from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import TextLoader
 from langchainget.query import query,get_conversational_chain
-import os
 from db.db import connect_to_mongo
 
 class QueryRequest(BaseModel):
@@ -27,8 +29,6 @@ async def storevector(text: content):
     with open("db\Content.txt", "a") as file:
         file.write(text.text)
     file.close()
-    file = open("db\Content.txt")
-    cont = file.read()
 
     loader = TextLoader("db\Content.txt")
     docs = loader.load()
@@ -36,7 +36,6 @@ async def storevector(text: content):
     splits = text_spiliter.split_documents(docs)
     embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001",google_api_key=os.getenv('GEMINI_API_KEY'))
     store = [] 
-    embedding = []
     for split in splits:
         store.append(split.page_content)
     
